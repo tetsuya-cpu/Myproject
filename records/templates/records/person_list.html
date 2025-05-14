@@ -1,0 +1,126 @@
+<!-- templates/records/person_list.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>People Directory</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f0f2f5;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 960px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .actions {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+
+        .actions input[type="text"] {
+            padding: 8px;
+            width: 70%;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .actions button,
+        .actions a {
+            background-color: #4CAF50;
+            color: white;
+            padding: 8px 16px;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .actions button:hover,
+        .actions a:hover {
+            background-color: #45a049;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 12px;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .action-links a {
+            margin-right: 10px;
+            color: #007BFF;
+            text-decoration: none;
+        }
+
+        .action-links a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>People Directory</h2>
+    <form method="get" class="actions">
+        <input type="text" name="q" placeholder="Search by any field..." value="{{ request.GET.q }}">
+        <button type="submit">Search</button>
+        <a href="{% url 'person_add' %}">Add New</a>
+    </form>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Birthdate</th>
+            <th>Salary</th>
+            <th>Description</th>
+            <th>Actions</th>
+        </tr>
+        {% for person in people %}
+        <tr>
+            <td>{{ person.name }}</td>
+            <td>{{ person.age }}</td>
+            <td>{{ person.birthdate }}</td>
+            <td>${{ person.salary|floatformat:2 }}</td>
+            <td>{{ person.description }}</td>
+            <td class="action-links">
+                <a href="{% url 'person_edit' person.id %}">Edit</a>
+                <a href="{% url 'person_delete' person.id %}">Delete</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="6">No records found.</td></tr>
+        {% endfor %}
+    </table>
+</div>
+</body>
+</html>

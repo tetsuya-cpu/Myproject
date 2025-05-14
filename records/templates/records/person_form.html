@@ -1,0 +1,106 @@
+<!-- templates/records/person_form.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% if form.instance.pk %}Edit{% else %}Add{% endif %} Person</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f0f2f5;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="date"],
+        textarea {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            width: 100%;
+            box-sizing: border-box;
+            margin-top: 5px;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .buttons button,
+        .buttons a {
+            padding: 10px 20px;
+            text-decoration: none;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .buttons button {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .buttons a {
+            background-color: #ccc;
+            color: black;
+        }
+
+        .buttons button:hover {
+            background-color: #45a049;
+        }
+
+        .buttons a:hover {
+            background-color: #bbb;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>{% if form.instance.pk %}Edit{% else %}Add{% endif %} Person</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div class="buttons">
+            <button type="submit">Save</button>
+            <a href="{% url 'person_list' %}">Cancel</a>
+        </div>
+    </form>
+</div>
+</body>
+</html>
