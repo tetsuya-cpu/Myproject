@@ -2,7 +2,9 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import Person
 from .forms import PersonForm
 from django.db.models import Q
+from django.contrib.auth.decorators import login_required  # ✅ import login_required
 
+@login_required
 def person_list(request):
     query = request.GET.get('q')
     if query:
@@ -17,6 +19,7 @@ def person_list(request):
         people = Person.objects.all()
     return render(request, 'records/person_list.html', {'people': people})
 
+@login_required
 def person_create(request):
     if request.method == 'POST':
         form = PersonForm(request.POST)
@@ -27,6 +30,7 @@ def person_create(request):
         form = PersonForm()
     return render(request, 'records/person_form.html', {'form': form})
 
+@login_required
 def person_update(request, pk):
     person = get_object_or_404(Person, pk=pk)
     if request.method == 'POST':
@@ -38,6 +42,7 @@ def person_update(request, pk):
         form = PersonForm(instance=person)
     return render(request, 'records/person_form.html', {'form': form})
 
+@login_required
 def person_delete(request, pk):
     person = get_object_or_404(Person, pk=pk)
     if request.method == 'POST':
